@@ -1,0 +1,27 @@
+{
+  "_comment_ar": "إعداد العربي — Noto Kufi، 6 أوزان، أشكال العرض FE70–FEFF + أرقام عربية + ترقيم + ﷲ",
+  "_comment_en": "Arabic preset — Noto Kufi, 6 weights, Arabic Presentation Forms-B (FE70-FEFF) + Arabic-Indic digits + punctuation + Allah ligature",
+  "_note_ar": "غيّر المسارات في weights لتشير لمكان خطوط Noto Kufi عندك بعد ما تنزّلها من Google Fonts",
+  "_note_en": "Edit the paths under 'weights' to point to where you placed Noto Kufi Arabic TTFs (download from Google Fonts)",
+
+  "scale_em": 1024,
+  "scale_size": 20,
+  "ttf_upm": 1000,
+  "flip_y": true,
+
+  "weights": {
+    "1": "./fonts/NotoKufiArabic-Bold.ttf",
+    "2": "./fonts/NotoKufiArabic-Regular.ttf",
+    "3": "./fonts/NotoKufiArabic-Bold.ttf",
+    "4": "./fonts/NotoKufiArabic-Regular.ttf",
+    "5": "./fonts/NotoKufiArabic-SemiBold.ttf",
+    "6": "./fonts/NotoKufiArabic-Medium.ttf"
+  },
+
+  "codepoints": {
+    "_comment": "FE70-FF00 = Arabic Presentation Forms-B (144 codepoints, ~141 available in Noto Kufi)",
+    "ranges": [[65136, 65280]],
+    "extras": [1548, 1563, 1567, 64818,
+               1632, 1633, 1634, 1635, 1636, 1637, 1638, 1639, 1640, 1641]
+  }
+}
