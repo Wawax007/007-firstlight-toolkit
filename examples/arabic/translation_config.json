@@ -1,0 +1,11 @@
+{
+  "_comment_ar": "إعداد الترجمة العربية الكاملة (خط + واجهة + حوار + أسماء)",
+  "_comment_en": "Full Arabic translation config (font + UI + dialogue + speaker names)",
+
+  "language": "arabic",
+
+  "font":      "./font_config.json",
+  "ui":        "./translations/ui.json",
+  "dialogue":  "./translations/dialogue.json",
+  "speakers":  "./translations/speakers.json"
+}

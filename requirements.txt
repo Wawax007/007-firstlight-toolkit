@@ -1,2 +1,9 @@
+# أساسي (RPKG + GFXF)
+# Core (RPKG + GFXF)
 lz4>=4.0.0
 fonttools>=4.40.0
+
+# للغات اللي تحتاج reshaping/bidi (العربي، الفارسي، الأردو...)
+# Languages requiring reshaping/bidi (Arabic, Persian, Urdu...)
+arabic_reshaper>=3.0.0
+python-bidi>=0.4.2

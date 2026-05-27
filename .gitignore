@@ -10,24 +10,32 @@ venv/
 
 # مجلد العمل المؤقت | Working directory
 _work/
+_toolkit_backup/
 
 # نسخ احتياطية | Backups
 *_backup/
 *.bak
 
-# ملفات الـ IDE | IDE
+# IDE
 .vscode/
 .idea/
 *.swp
 *~
 
-# نظام التشغيل | OS
+# OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# ملفات اللعبة (لا ترفعها أبداً!) | Game files (NEVER commit!)
+# ملفات اللعبة (لا تُرفع للريبو!) | Game files (NEVER commit!)
 *.rpkg
 *.GFXF
+
+# خطوط مستخدمين شخصية | User fonts (avoid committing copyrighted fonts)
+examples/*/fonts/
 *.ttf
 *.otf
+
+# ترجمات شخصية | Personal translations
+examples/*/translations/
+my_translation/

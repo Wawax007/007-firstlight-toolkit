@@ -1,87 +1,106 @@
-# مثال: تركيب الخط العربي
-# Example: Installing an Arabic font
+# مثال: تعريب 007 First Light كاملاً
+# Example: Full Arabic translation of 007 First Light
 
 ## 🇸🇦 بالعربي
 
-هذا مثال جاهز لتركيب خط [Noto Kufi Arabic](https://fonts.google.com/noto/specimen/Noto+Kufi+Arabic) من قوقل على لعبة 007 First Light.
+هذا مثال جاهز لتعريب اللعبة كاملاً: خط + واجهة + حوار + أسماء المتحدّثين.
 
 ### الخطوات
 
-1. **نزّل خطوط Noto Kufi Arabic** من قوقل:
-   - افتح: https://fonts.google.com/noto/specimen/Noto+Kufi+Arabic
-   - اضغط على **Download family**
-   - فك ضغط الـ ZIP
-   - راح تلقى مجلد `static/` فيه ملفات `.ttf` (Bold, Regular, SemiBold, Medium, إلخ)
+#### 1. حمّل خطوط Noto Kufi Arabic
 
-2. **عدّل المسارات في `font_config.json`**:
+- افتح: https://fonts.google.com/noto/specimen/Noto+Kufi+Arabic
+- اضغط **Download family**
+- فك الـ ZIP وحط المجلد `static/` داخل هذا المجلد باسم `fonts/`
+- أو عدّل المسارات في `font_config.json` لتشير لمكان خطوطك
 
-   افتح الملف وغيّر مسارات الـ TTF لتشير إلى المكان اللي حطّيت فيه الخطوط. مثال:
+التركيب المتوقّع | Expected layout:
+```
+examples/arabic/
+├── font_config.json
+├── translation_config.json
+├── fonts/
+│   ├── NotoKufiArabic-Bold.ttf
+│   ├── NotoKufiArabic-Regular.ttf
+│   ├── NotoKufiArabic-SemiBold.ttf
+│   └── NotoKufiArabic-Medium.ttf
+└── translations/
+    ├── ui.json
+    ├── dialogue.json
+    └── speakers.json
+```
 
-   ```json
-   "weights": {
-     "1": "C:/Users/YourName/Downloads/Noto_Kufi_Arabic/static/NotoKufiArabic-Bold.ttf",
-     "2": "C:/Users/YourName/Downloads/Noto_Kufi_Arabic/static/NotoKufiArabic-Regular.ttf",
-     "3": "C:/Users/YourName/Downloads/Noto_Kufi_Arabic/static/NotoKufiArabic-Bold.ttf",
-     "4": "C:/Users/YourName/Downloads/Noto_Kufi_Arabic/static/NotoKufiArabic-Regular.ttf",
-     "5": "C:/Users/YourName/Downloads/Noto_Kufi_Arabic/static/NotoKufiArabic-SemiBold.ttf",
-     "6": "C:/Users/YourName/Downloads/Noto_Kufi_Arabic/static/NotoKufiArabic-Medium.ttf"
-   }
-   ```
+#### 2. حضّر ملفات الترجمة
 
-3. **شغّل السكربت**:
+استخرج النصوص من اللعبة:
 
-   من جذر المشروع:
+```powershell
+python tools/extract_text.py --game-dir "D:/SteamLibrary/steamapps/common/007 First Light" --out examples/arabic/translations/
+```
 
-   ```powershell
-   python scripts/install_font.py --config examples/arabic/font_config.json
-   ```
+هذا يولّد 3 ملفات بالإنجليزي:
+- `ui.json` — نصوص الواجهة
+- `dialogue.json` — نصوص الحوار
+- `speakers.json` — أسماء المتحدّثين
 
-### إيش يسوّيه هذا الإعداد؟
+افتحها وترجم القيم. اترك المفاتيح كما هي.
 
-- يحقن **155 شكل عرض عربي** (Arabic Presentation Forms-B من `U+FE70` إلى `U+FEFF`).
-- يضيف **الأرقام العربية-الهندية** (`٠–٩`).
-- يضيف **علامات الترقيم العربية**: `،` `؛` `؟` و ligature `ﷲ`.
-- يضيف الخط في كل أوزان عائلة Rajdhani (1, 4, 5, 6) وخطوط العناوين (2, 3).
+#### 3. ركّب التعريب
 
-### ملاحظة مهمة عن العربي
+```powershell
+python tools/install_translation.py --config examples/arabic/translation_config.json
+```
 
-اللعبة تستخدم Scaleform/GFX، اللي ما يدعم RTL أو reshaping تلقائياً. عشان يطلع العربي صح في اللعبة، لازم النص نفسه يتم:
+السكربت بيكتشف اللعبة، ياخذ نسخة احتياطية، ويركّب كل شي.
 
-1. **إعادة تشكيله** بـ `arabic_reshaper` (يحوّل الحروف لشكل العرض المناسب: مفصول، أول، وسط، نهاية).
-2. **عكسه** بـ `python-bidi`'s `get_display` (للترتيب البصري RTL).
+#### 4. شغّل اللعبة
 
-الأداة هذي تركّب **الخط فقط** — مو الترجمة. لو تبي تترجم اللعبة كاملة، هذا مشروع منفصل.
+#### للاسترجاع
+
+```powershell
+python tools/install_translation.py --restore
+```
+
+### ملاحظات تقنية مهمّة
+
+- **Reshaping**: السكربت يطبّق `arabic_reshaper` + `python-bidi` تلقائياً على كل نص عربي لأن Scaleform/GFX ما يدعم RTL أو reshaping.
+- **الخط**: يحقن 155 شكل عرض عربي (`U+FE70`–`U+FEFF`) + أرقام `٠–٩` + علامات `،` `؛` `؟` + ligature `ﷲ`.
+- **أسماء المتحدّثين**: تنحقن بـ byte-level surgery (استبدال الحقل الأول فقط في DLGE base block، النص المنطوق ما يتأثّر).
 
 ---
 
 ## 🇬🇧 English
 
-A ready-made example for installing [Noto Kufi Arabic](https://fonts.google.com/noto/specimen/Noto+Kufi+Arabic) into 007 First Light.
+A ready-made example for fully localizing the game into Arabic: font + UI + dialogue + speaker names.
 
 ### Steps
 
-1. **Download Noto Kufi Arabic** from Google Fonts → unzip → find the `static/` folder with the `.ttf` files.
+#### 1. Download Noto Kufi Arabic
 
-2. **Edit `font_config.json`** to point to your TTF paths.
+From https://fonts.google.com/noto/specimen/Noto+Kufi+Arabic. Place the `static/` folder here as `fonts/`, or edit the paths in `font_config.json`.
 
-3. **Run** from the project root:
+#### 2. Prepare translation files
 
-   ```powershell
-   python scripts/install_font.py --config examples/arabic/font_config.json
-   ```
+```powershell
+python tools/extract_text.py --game-dir "D:/SteamLibrary/steamapps/common/007 First Light" --out examples/arabic/translations/
+```
 
-### What this preset does
+This generates `ui.json`, `dialogue.json`, and `speakers.json` (in English). Translate the values, keep the keys.
 
-- Injects **155 Arabic Presentation Forms-B glyphs** (`U+FE70`–`U+FEFF`).
-- Adds **Arabic-Indic digits** (`٠–٩`).
-- Adds **Arabic punctuation**: `،` `؛` `؟` and the `ﷲ` ligature.
-- Covers all four Rajdhani weights (1, 4, 5, 6) plus the title fonts (2, 3).
+#### 3. Install
 
-### Important note about Arabic
+```powershell
+python tools/install_translation.py --config examples/arabic/translation_config.json
+```
 
-The game uses Scaleform/GFX which does **not** auto-shape or auto-RTL. For Arabic to render correctly in-game, the *text itself* must be:
+#### 4. Restore
 
-1. **Reshaped** with `arabic_reshaper` (maps base letters to their presentation forms).
-2. **Bidi-reversed** with `python-bidi`'s `get_display` (to visual RTL order).
+```powershell
+python tools/install_translation.py --restore
+```
 
-This tool only installs the **font** — not the translation. Full game localization is a separate project.
+### Technical notes
+
+- **Reshaping**: The script automatically applies `arabic_reshaper` + `python-bidi` to every Arabic string because Scaleform/GFX does not support RTL or shaping natively.
+- **Font**: Injects 155 Arabic Presentation Forms-B glyphs (`U+FE70`–`U+FEFF`) + Arabic-Indic digits `٠–٩` + punctuation `،` `؛` `؟` + `ﷲ` ligature.
+- **Speaker names**: Injected via byte-level surgery (replacing only field 1 of DLGE base block; spoken text is untouched).
