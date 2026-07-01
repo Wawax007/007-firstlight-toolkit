@@ -106,8 +106,8 @@ The XOR is symmetric, so injection reverses the order:
 
 | Constant | Value |
 |----------|-------|
-| `chunk0` hashCount | 284,971 |
-| `chunk1` hashCount | 464,014 |
+| `chunk0` hashCount | 284,983 * |
+| `chunk1` hashCount | 464,018 * |
 | Font resource (English) | `01DD9580958CDC9B` (in chunk0) |
 | String XTEA key | `0x68AC3361 0x562B4AA0 0xB9F2771F 0x28EB3CE7` |
 | String XTEA rounds | 32 |
@@ -115,6 +115,12 @@ The XOR is symmetric, so injection reverses the order:
 | XOR scramble key | `DC 45 A6 9C D3 72 4C AB` |
 | LOCR English lang_index | 1 |
 | Number of LOCR languages | 15 |
+
+> **\* Resource counts change with every game patch.** The values above are
+> only a snapshot (Steam build `23685521`). **Never hardcode them** — the
+> tooling reads `hashCount` live from the header at offset `0x0D` on each run
+> (`rpkg.read_header`), so it works on any build automatically. All other
+> constants in this table (keys, offsets, font hash) are stable across patches.
 
 ---
 

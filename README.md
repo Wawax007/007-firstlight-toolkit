@@ -25,7 +25,7 @@ Born from the 2026 Arabic localization effort — the first complete translation
 
 - ويندوز (يشتغل على لينكس كمان)
 - [Python 3.10+](https://www.python.org/downloads/)
-- لعبة 007 First Light مثبّتة (Steam)
+- لعبة 007 First Light مثبّتة (Steam / GOG / Epic / Xbox / أي مجلد مخصّص — تُكتشف تلقائياً، وأي إصدار مدعوم)
 
 ### التثبيت السريع
 
@@ -138,7 +138,7 @@ A Python toolkit for modding 007 First Light (Glacier engine, RPKG v2). It can:
 
 - Windows (also works on Linux)
 - [Python 3.10+](https://www.python.org/downloads/)
-- 007 First Light installed (Steam)
+- 007 First Light installed (Steam / GOG / Epic / Xbox / any custom folder — auto-detected, and build-agnostic: any game version works)
 
 ### Install
 
