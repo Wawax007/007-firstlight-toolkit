@@ -172,7 +172,9 @@ def read_resource(chunk_path, t1, t2, index, roff=None):
     type_str, dbs, dsz = t2_record_info(t2, rec_off)
     with open(chunk_path, "rb") as f:
         f.seek(off)
-        blob = f.read(comp)
+        # comp == 0 means the resource is stored uncompressed (dsz bytes on disk),
+        # possibly still XOR-scrambled (e.g. TEXT resources).
+        blob = f.read(comp if comp else dsz)
     if is_xor:
         blob = xor_scramble(blob)
     if comp == 0 or comp == dsz:
